@@ -4,8 +4,8 @@ services:
     stdin_open: true
     tty: true
     build: .
-    environment:
-      FLASK_APP: app.py
+    env_file:
+      - .vars.env
     command: python app.py
     ports:
       - "5000:5000"

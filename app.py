@@ -5,11 +5,11 @@ import os
 
 logger = logging.getLogger(__name__)
 
-PORT = os.getenv('PORT', 5000)
+PORT = int(os.getenv('PORT', 5000))
 TOKEN = os.getenv('TELEGRAM_API_TOKEN')
 
 def start(bot, update):
-    update.message.reply_text('Hi!')
+    update.message.reply_text('Hello!')
 
 
 def help(bot, update):
@@ -28,7 +28,6 @@ def main():
     updater = Updater(TOKEN)
     dp = updater.dispatcher
 
-    # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(MessageHandler(Filters.text, echo))
