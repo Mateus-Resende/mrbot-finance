@@ -1,0 +1,31 @@
+{
+  "name": "mrbot_nodejs",
+  "version": "0.0.1",
+  "description": "Telegram Bot for expenses tracking",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app/index.js -- --inspect 0.0.0.0:9229 ",
+    "test": "jest -u --coverage"
+  },
+  "keywords": [
+    "node",
+    "docker",
+    "finance",
+    "fintech"
+  ],
+  "author": "Mateus A. M. Resende",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^8.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.11",
+    "ngrok": "^3.1.1",
+    "node-telegram-bot-api": "^0.30.0",
+    "supertest": "^4.0.2"
+  },
+  "devDependencies": {
+    "jest": "^24.7.1"
+  }
+}
