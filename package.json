@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon app/index.js -- --inspect 0.0.0.0:9229 ",
-    "test": "npm run lint && jest -u --coverage",
-    "lint": "standard \"app/**/*.js\" --fix"
+    "test": "npm run lint && node_modules/jest/bin/jest.js -u --coverage",
+    "lint": "node_modules/standard/bin/cmd.js \"app/**/*.js\" --fix"
   },
   "keywords": [
     "node",
