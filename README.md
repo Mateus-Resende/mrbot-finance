@@ -1,6 +1,6 @@
 # MrBot Gerenciador de orçamentos
 
-[![CircleCI](https://circleci.com/gh/Mateus-Resende/mrbot-finance.svg?style=svg)](https://circleci.com/gh/Mateus-Resende/mrbot-finance)
+[![CircleCI](https://circleci.com/gh/Mateus-Resende/mrbot-finance/tree/master.svg?style=svg)](https://circleci.com/gh/Mateus-Resende/mrbot-finance/tree/master)
 
 MrBot é um bot para Telegram, onde você pode adicionar os seus gastos mensais para controlar suas despesas. O monitoramento é feito por categorias que você mesmo cria e ainda pode criar objetivos para planejar suas metas.
 
