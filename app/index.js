@@ -1,48 +1,45 @@
 require('dotenv').config()
 
-const TelegramBot = require('node-telegram-bot-api');
+const Telegraf = require('telegraf');
 const mongoose = require('mongoose');
 const ngrok = require('ngrok');
 
-const host = process.env.MONGO_DB_HOST;
-const port = process.env.MONGO_DB_PORT;
+const dbHost = process.env.MONGO_DB_HOST;
+const dbPort = process.env.MONGO_DB_PORT;
 const dbName = process.env.MONGO_DB_NAME;
-const mongoUri = `mongodb://${host}:${port}/${dbName}`;
+const mongoUri = `mongodb://${dbHost}:${dbPort}/${dbName}`;
 const token = process.env.TELEGRAM_BOT_TOKEN;
 const env = process.env.ENVIRONMENT;
-const options = {
-  webHook: {
-    port: process.env.PORT
-  }
-};
-const bot = new TelegramBot(token, options);
+const bot = new Telegraf(token);
 
 mongoose.connect(mongoUri, { useNewUrlParser: true });
 
-let start = function (url, bot) {
-  bot.setWebHook(`${url}/bot${token}`);
-
-  bot.onText(/\/help/, function onMessage(msg) {
-    bot.sendMessage(msg.chat.id, '/addDespesa data(opcional) categoria valor')
+const start = function (url, port, bot) {
+  bot.help((ctx) => {
+    const availableCommands = '/addDespesa data(opcional) categoria valor'
+    ctx.reply(availableCommands)
   });
 
-  bot.onText(/\/addDespesa/, function onMessage(msg) {
-    bot.sendMessage(msg.chat.id, 'I am alive on Zeit Now!');
-  });
+  bot.on('text', (ctx) => {
+    ctx.reply(`Echo: ${ctx.message.text}`)
+  })
 
-  bot.on('message', function onMessage(msg) {
-    bot.sendMessage(msg.chat.id, `Echo: ${msg.text}`)
+  bot.launch({
+    webhook: {
+      domain: url,
+      port: port
+    }
   })
 };
 
 
 if (env === "production" || env === "staging") {
-  start(process.env.URL, bot)
+  start(process.env.URL, process.env.PORT, bot)
 } else {
   ngrok
   .connect(process.env.PORT)
   .then((url) => {
-    start(url, bot);
+    start(url, process.env.PORT, bot);
   })
   .catch(e => console.error(e));
 }
