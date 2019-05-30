@@ -19,7 +19,6 @@ const rollbar = new Rollbar({
 
 const start = function (url, port, bot) {
   bot.command('help', ({ reply }) => {
-    rollbar.log('help command')
     reply(HelpController.getCommands(), Extra.HTML())
   })
 
@@ -40,17 +39,12 @@ const start = function (url, port, bot) {
   })
 }
 
-rollbar.log(process.env.ENVIRONMENT)
-
 if (env === 'production' || env === 'staging') {
-  rollbar.log('Hello world!')
-  rollbar.log(process.env.URL)
   start(process.env.URL, process.env.PORT, bot)
 } else {
   ngrok
     .connect(process.env.PORT)
     .then((url) => {
-      rollbar.log(url)
       start(url, process.env.PORT, bot)
     })
     .catch(e => console.error(e))
