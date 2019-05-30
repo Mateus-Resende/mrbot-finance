@@ -21,7 +21,7 @@ jobs:
           name: Deployment notification to Rollbar
           command: |
             curl https://api.rollbar.com/api/1/deploy/ \
-            -F access_token='ACCESS-TOKEN' \
+            -F access_token=$ROLLBAR_ACCESS_TOKEN \
             -F environment=production \
             -F revision=$CIRCLE_SHA1 \
             -F rollbar_username=mateus.rsnd \
