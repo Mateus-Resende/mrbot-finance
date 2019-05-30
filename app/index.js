@@ -1,8 +1,11 @@
 require('dotenv').config()
 
 const Telegraf = require('telegraf')
+const Extra = require('telegraf/extra')
 const mongoose = require('mongoose')
 const ngrok = require('ngrok')
+
+const HelpController = require('./controller/helpController')
 
 const token = process.env.TELEGRAM_BOT_TOKEN
 const env = process.env.ENVIRONMENT
@@ -16,13 +19,16 @@ const mongoUri = `mongodb://${dbHost}:${dbPort}/${dbName}`
 mongoose.connect(mongoUri, { useNewUrlParser: true })
 
 const start = function (url, port, bot) {
-  bot.help((ctx) => {
-    const availableCommands = '/addDespesa data(opcional) categoria valor'
-    ctx.reply(availableCommands)
+  bot.command('help', ({ reply }) => {
+    reply(HelpController.getCommands(), Extra.HTML())
   })
 
   bot.on('text', (ctx) => {
     ctx.reply(`Echo: ${ctx.message.text}`)
+  })
+
+  bot.catch((err) => {
+    console.log(err)
   })
 
   bot.launch({
