@@ -4,7 +4,7 @@ class Help {
     let html = []
     html.push(
       '<b>List of commands:</b>',
-      '  <i>\\help</i> - Show all available commands'
+      '    <b>/help</b> - <i>Show all available commands</i>'
     )
     return html.join('\n')
   }
