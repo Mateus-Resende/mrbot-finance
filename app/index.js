@@ -5,7 +5,7 @@ const Extra = require('telegraf/extra')
 const mongoose = require('mongoose')
 const ngrok = require('ngrok')
 
-const HelpController = require('./controller/helpController')
+const HelpController = require('./use-case/help/help')
 
 const token = process.env.TELEGRAM_BOT_TOKEN
 const env = process.env.ENVIRONMENT
