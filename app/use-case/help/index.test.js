@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const help = require('./help')
+const help = require('./index.js.js')
 
 test('sends returns the HTML with the commands', () => {
   const commands = [

@@ -3,23 +3,27 @@ require('dotenv').config()
 const Telegraf = require('telegraf')
 const Extra = require('telegraf/extra')
 const ngrok = require('ngrok')
-const Rollbar = require('rollbar')
 
-const HelpController = require('./use-case/help/help')
+const rollbar = require('../config/rollbar')
+const db = require('../config/db')
+
+const Help = require('./use-case/help/index.js')
+const Category = require('./use-case/category/create.js')
 
 const token = process.env.TELEGRAM_BOT_TOKEN
 const env = process.env.ENVIRONMENT
 const bot = new Telegraf(token)
 
-const rollbar = new Rollbar({
-  accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
-  captureUncaught: true,
-  captureUnhandledRejections: true
-})
-
 const start = function (url, port, bot) {
+  db.createTables()
+
   bot.command('help', ({ reply }) => {
-    reply(HelpController.getCommands(), Extra.HTML())
+    reply(Help.getCommands(), Extra.HTML())
+  })
+
+  bot.command('addCategory', async ({ reply, message }) => {
+    const msg = await Category.create(message)
+    reply(msg)
   })
 
   bot.on('text', (ctx) => {
@@ -28,7 +32,7 @@ const start = function (url, port, bot) {
 
   bot.catch((err) => {
     rollbar.error(err)
-    console.log(err)
+    console.error(err)
   })
 
   bot.launch({

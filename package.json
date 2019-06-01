@@ -20,6 +20,8 @@
   "dependencies": {
     "dotenv": "^8.0.0",
     "ngrok": "^3.1.1",
+    "nodemon": "^1.19.1",
+    "pg": "^7.11.0",
     "rollbar": "^2.7.1",
     "telegraf": "^3.29.0"
   },
