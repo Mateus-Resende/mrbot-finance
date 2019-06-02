@@ -1,6 +1,8 @@
+const path = require('path')
+
 const { setupTables, tearDown } = require('../test-helper')
-const Category = require('../../app/category/model')
-const Repository = require('../../app/category/Repository')
+const Category = require(path.resolve(process.cwd(), './app/category/model'))
+const Repository = require(path.resolve(process.cwd(), './app/category/repository'))
 
 /* eslint-disable no-undef */
 
