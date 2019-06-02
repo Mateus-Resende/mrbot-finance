@@ -6,7 +6,7 @@ const ngrok = require('ngrok')
 const rollbar = require('../config/rollbar')
 const db = require('../config/db')
 const Help = require('./help/index.js')
-const Category = require('./category/index.js/index.js')
+const Category = require('./category/index.js')
 
 dotenv.config()
 
@@ -24,8 +24,8 @@ const start = function (url, port, bot) {
     reply(Help.getCommands(), Extra.HTML())
   })
 
-  bot.command('addcategory', (ctx) => {
-    const replyMessage = new Category(ctx).create()
+  bot.command('addcategory', async (ctx) => {
+    const replyMessage = await new Category(ctx).create()
     ctx.reply(replyMessage)
   })
 

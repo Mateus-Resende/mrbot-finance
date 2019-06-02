@@ -7,14 +7,14 @@ const fs = require('fs')
 const { PGUSER, PGPASSWORD, PGHOST, PGPORT, PGDATABASE } = process.env
 const pgUri = `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`
 
-const pool = new Pool({
-  connectionString: pgUri
-})
-
 /**
  * Create Tables
  */
 const createTables = () => {
+  const pool = new Pool({
+    connectionString: pgUri
+  })
+
   const queryText = fs.readFileSync(path.resolve(process.cwd(), 'config/schema.sql')).toString()
 
   pool.query(queryText)
@@ -28,6 +28,10 @@ const createTables = () => {
 }
 
 const query = function (text, params) {
+  const pool = new Pool({
+    connectionString: pgUri
+  })
+
   return new Promise((resolve, reject) => {
     pool.query(text, params)
       .then((res) => {

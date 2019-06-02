@@ -2,41 +2,27 @@ const Category = require('./model')
 const Repository = require('./repository')
 
 class UseCase {
-  constructor (message) {
-    this.userId = message.from.id
-    this.message = message
+  constructor (update) {
+    this.userId = update.from.id
+    this.text = update.message.text
   }
 
   create () {
-    const values = this.message.split(' ')
+    const values = this.text.split('-')
 
     const model = new Category({
-      name: values[0],
-      spendingLimit: values[1],
+      name: values[1].trim(),
+      spendingLimit: parseFloat(values[2]),
       userId: this.userId
     })
 
-    Repository.create(model)
+    return Repository.create(model)
       .then(res => {
-        return `Category ${model.name} created with max value of ${model.maxValue}`
+        return `Category ${model.name} created with max value of ${model.spendingLimit}`
       })
       .catch(res => {
-        const msg = [
-          'Could not create the category with ',
-          `name: ${model.name} and maxValue: ${model.spendingLimit}\n`,
-          'Please use the following format:',
-          '/addcategory <name> <maximum_value>'
-        ]
-        return msg.join()
+        return res.message
       })
-  }
-
-  update () {
-
-  }
-
-  delete () {
-
   }
 }
 

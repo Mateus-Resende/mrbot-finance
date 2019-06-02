@@ -34,4 +34,9 @@ const tearDown = () => {
     })
 }
 
-module.exports = { setupTables, tearDown }
+const findCategory = (name) => {
+  const queryText = `SELECT * from categories where name = $1`
+  return pool.query(queryText, [name])
+}
+
+module.exports = { setupTables, tearDown, findCategory }
