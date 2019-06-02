@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS
       deleted_at TIMESTAMP,
       created_at TIMESTAMP DEFAULT now(),
       updated_at TIMESTAMP DEFAULT now()
-    )
+    );

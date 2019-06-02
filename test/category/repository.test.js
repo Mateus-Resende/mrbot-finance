@@ -92,7 +92,7 @@ describe('with invalid params', () => {
           done()
         })
         .catch((err) => {
-          expect(err.message).toEqual(`invalid input syntax for type uuid: "${model.id}"`)
+          expect(err.message).toMatch(/invalid input syntax(.+)uuid/)
           done()
         })
     })
