@@ -3,11 +3,49 @@ jobs:
   build:
     docker:
       - image: circleci/node:12.3
+      - image: circleci/postgres:10.8-alpine
+        environment:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_DB: mrbot-development
     working_directory: ~/repo
     steps:
       - checkout
-      - run: npm install
-      - run: npm test
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Waiting for Postgres to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for Postgres && exit 1
+      - run:
+          name: Run tests
+          command: |
+            npm test
+          environment:
+            ENVIRONMENT: 'development'
+            PGHOST: 'localhost'
+            PGPORT: 5432
+            PGDATABASE: 'mrbot-development'
+            PGUSER: 'postgres'
+            PGPASSWORD: 'postgres'
+
+
   deploy:
     docker:
       - image: buildpack-deps:trusty
