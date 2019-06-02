@@ -1,5 +1,4 @@
 require('dotenv').config()
-
 const { Pool } = require('pg')
 const path = require('path')
 const fs = require('fs')
@@ -14,29 +13,25 @@ const pool = new Pool({
 /**
  * Create Tables
  */
-const createTables = () => {
+const setupTables = () => {
   const queryText = fs.readFileSync(path.resolve(process.cwd(), 'config/schema.sql')).toString()
 
-  pool.query(queryText)
-    .then((res) => {
-      pool.end()
-    })
+  return pool.query(queryText)
     .catch((err) => {
       throw err
     })
-    .finally(() => pool.end())
 }
 
-const query = function (text, params) {
-  return new Promise((resolve, reject) => {
-    pool.query(text, params)
-      .then((res) => {
-        resolve(res)
-      })
-      .catch((err) => {
-        reject(err)
-      })
-  })
+/**
+ * Truncate Tables
+ */
+const tearDown = () => {
+  const queryText = `DROP TABLE IF EXISTS categories`
+
+  return pool.query(queryText)
+    .catch((err) => {
+      throw err
+    })
 }
 
-module.exports = { createTables, query }
+module.exports = { setupTables, tearDown }

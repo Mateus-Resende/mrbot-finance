@@ -6,7 +6,7 @@
   "scripts": {
     "nodemon": "nodemon app/index.js -- --inspect 0.0.0.0:9229 ",
     "start": "node app/index.js",
-    "test": "npm run lint && node_modules/jest/bin/jest.js -u --coverage",
+    "test": "npm run lint && node_modules/jest/bin/jest.js -u --coverage --detectOpenHandles",
     "lint": "node_modules/standard/bin/cmd.js \"app/**/*.js\" --fix"
   },
   "keywords": [
@@ -18,12 +18,14 @@
   "author": "Mateus A. M. Resende",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.5",
     "dotenv": "^8.0.0",
     "ngrok": "^3.1.1",
     "nodemon": "^1.19.1",
     "pg": "^7.11.0",
     "rollbar": "^2.7.1",
-    "telegraf": "^3.29.0"
+    "telegraf": "^3.29.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "jest": "^24.7.1",
