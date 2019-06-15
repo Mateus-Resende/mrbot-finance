@@ -3,8 +3,8 @@ const { Pool } = require('pg')
 const path = require('path')
 const fs = require('fs')
 
-const { PGUSER, PGPASSWORD, PGHOST, PGPORT, PGDATABASE } = process.env
-const pgUri = `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`
+const { POSTGRES_USER, POSTGRES_PASSWORD, PGHOST, PGPORT, POSTGRES_DB } = process.env
+const pgUri = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${PGHOST}:${PGPORT}/${POSTGRES_DB}`
 
 const pool = new Pool({
   connectionString: pgUri
