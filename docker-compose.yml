@@ -1,0 +1,32 @@
+version: "3.4"
+services:
+  app:
+    build: .
+    env_file:
+      - .env
+    command: npm run dev
+    ports:
+      - "3001:3001"
+      - "9229:9229"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+    logging:
+      options:
+        max-size: 500m
+
+  db:
+    image: postgres:11.3-alpine
+    volumes:
+      - db:/var/lib/psql
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+
+volumes:
+  db:
+    driver: local
+

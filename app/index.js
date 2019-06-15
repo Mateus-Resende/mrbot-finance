@@ -2,7 +2,6 @@ const dotenv = require('dotenv')
 const Telegraf = require('telegraf')
 const Extra = require('telegraf/extra')
 const Session = require('telegraf/session')
-const ngrok = require('ngrok')
 const rollbar = require('../config/rollbar')
 const db = require('../config/db')
 const Help = require('./help/index.js')
@@ -14,7 +13,7 @@ const token = process.env.TELEGRAM_BOT_TOKEN
 const env = process.env.ENVIRONMENT
 const bot = new Telegraf(token)
 
-const start = function (url, port, bot) {
+const start = function (bot, opts) {
   // setup database
   db.createTables()
 
@@ -38,21 +37,25 @@ const start = function (url, port, bot) {
     console.error(err)
   })
 
-  bot.launch({
-    webhook: {
-      domain: url,
-      port: port
-    }
-  })
+  if (opts.production) {
+    bot.launch({
+      webhook: {
+        domain: opts.url,
+        port: opts.port
+      }
+    })
+  } else {
+    rollbar.error('Started')
+    bot.launch()
+  }
 }
 
 if (env === 'production' || env === 'staging') {
-  start(process.env.URL, process.env.PORT, bot)
+  start(bot, {
+    production: true,
+    url: process.env.URL,
+    port: process.env.PORT
+  })
 } else {
-  ngrok
-    .connect(process.env.PORT)
-    .then((url) => {
-      start(url, process.env.PORT, bot)
-    })
-    .catch(e => console.error(e))
+  start(bot, {})
 }

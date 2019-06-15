@@ -38,12 +38,12 @@ jobs:
           command: |
             npm test
           environment:
-            ENVIRONMENT: 'development'
-            PGHOST: 'localhost'
+            ENVIRONMENT: development
+            PGHOST: db
             PGPORT: 5432
-            PGDATABASE: 'mrbot-development'
-            PGUSER: 'postgres'
-            PGPASSWORD: 'postgres'
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_DB: mrbot-development
 
 
   deploy:
@@ -63,8 +63,7 @@ jobs:
             -F environment=production \
             -F revision=$CIRCLE_SHA1 \
             -F rollbar_username=mateus.rsnd \
-            -F local_username=$CIRCLE_USERNAME \
-            -F comment='Deploy with bug'
+            -F local_username=$CIRCLE_USERNAME
 
 workflows:
   version: 2

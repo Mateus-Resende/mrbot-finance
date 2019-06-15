@@ -1,4 +1,3 @@
-
 const Rollbar = require('rollbar')
 
 const rollbar = new Rollbar({
