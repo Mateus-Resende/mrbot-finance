@@ -45,7 +45,6 @@ const start = function (bot, opts) {
       }
     })
   } else {
-    rollbar.error('Started')
     bot.launch()
   }
 }
