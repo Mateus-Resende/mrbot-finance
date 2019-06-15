@@ -39,7 +39,7 @@ jobs:
             npm test
           environment:
             ENVIRONMENT: development
-            PGHOST: db
+            PGHOST: localhost
             PGPORT: 5432
             POSTGRES_PASSWORD: postgres
             POSTGRES_USER: postgres
