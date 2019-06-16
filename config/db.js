@@ -14,7 +14,6 @@ const createTables = () => {
   const pool = new Pool({
     connectionString: pgUri
   })
-  console.log(pgUri)
   const queryText = fs.readFileSync(path.resolve(process.cwd(), 'config/schema.sql')).toString()
 
   return pool.query(queryText)
