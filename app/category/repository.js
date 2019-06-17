@@ -2,7 +2,7 @@ const { query } = require('../../config/db')
 const Category = require('./model.js')
 
 class CategoryRepository {
-  static async create (model) {
+  async create (model) {
     const queryStr = `
       INSERT INTO categories (id, user_id, name, spending_limit, current)
       VALUES ($1, $2, $3, $4, $5)
@@ -15,15 +15,36 @@ class CategoryRepository {
       model.spendingLimit,
       model.current
     ]
+    return this.run(queryStr, values)
+  }
+
+  async find (userId, name) {
+    const queryStr = `
+      SELECT *
+        FROM categories
+        WHERE
+          user_id = $1 AND
+          name = $2
+        LIMIT 1
+    `
+
+    return this.run(queryStr, [userId, name])
+  }
+
+  async run (queryStr, params) {
     try {
-      const { rows } = await query(queryStr, values)
-      return this.toModel(rows[0])
+      const { rows } = await query(queryStr, params)
+      if (rows[0]) {
+        return this.toModel(rows[0])
+      } else {
+        throw new Error('Category not found')
+      }
     } catch (err) {
       throw err
     }
   }
 
-  static toModel (rawAttrs) {
+  toModel (rawAttrs) {
     return new Category({
       id: rawAttrs.id,
       userId: rawAttrs.user_id,

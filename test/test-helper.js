@@ -1,42 +1,25 @@
 require('dotenv').config()
-const { Pool } = require('pg')
-const path = require('path')
-const fs = require('fs')
-
-const { POSTGRES_USER, POSTGRES_PASSWORD, PGHOST, PGPORT, POSTGRES_DB } = process.env
-const pgUri = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${PGHOST}:${PGPORT}/${POSTGRES_DB}`
-
-const pool = new Pool({
-  connectionString: pgUri
-})
+const { createTables, query } = require('../config/db')
 
 /**
  * Create Tables
  */
 const setupTables = () => {
-  const queryText = fs.readFileSync(path.resolve(process.cwd(), 'config/schema.sql')).toString()
-
-  return pool.query(queryText)
-    .catch((err) => {
-      throw err
-    })
+  return createTables()
 }
 
 /**
  * Truncate Tables
  */
 const tearDown = () => {
-  const queryText = `DROP TABLE IF EXISTS categories`
+  const queryText = `TRUNCATE TABLE categories RESTART IDENTITY`
 
-  return pool.query(queryText)
-    .catch((err) => {
-      throw err
-    })
+  return query(queryText)
 }
 
 const findCategory = (name) => {
   const queryText = `SELECT * from categories where name = $1`
-  return pool.query(queryText, [name])
+  return query(queryText, [name])
 }
 
 module.exports = { setupTables, tearDown, findCategory }
