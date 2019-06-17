@@ -12,7 +12,7 @@ const setupTables = () => {
  * Truncate Tables
  */
 const tearDown = () => {
-  const queryText = `DROP TABLE IF EXISTS categories`
+  const queryText = `TRUNCATE TABLE categories RESTART IDENTITY`
 
   return query(queryText)
 }

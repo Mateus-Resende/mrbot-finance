@@ -17,12 +17,8 @@ const createTables = () => {
   const queryText = fs.readFileSync(path.resolve(process.cwd(), 'config/schema.sql')).toString()
 
   return pool.query(queryText)
-    .then((res) => {
-      pool.end()
-    })
     .catch((err) => {
       pool.end()
-      console.error(err)
       throw err
     })
 }

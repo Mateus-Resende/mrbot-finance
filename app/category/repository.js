@@ -23,8 +23,8 @@ class CategoryRepository {
       SELECT *
         FROM categories
         WHERE
-          name = $1 AND
-          user_id = $2
+          user_id = $1 AND
+          name = $2
         LIMIT 1
     `
 
@@ -34,7 +34,11 @@ class CategoryRepository {
   async run (queryStr, params) {
     try {
       const { rows } = await query(queryStr, params)
-      return this.toModel(rows[0])
+      if (rows[0]) {
+        return this.toModel(rows[0])
+      } else {
+        throw new Error('Category not found')
+      }
     } catch (err) {
       throw err
     }
