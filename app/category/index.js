@@ -1,5 +1,6 @@
 const Category = require('./model')
-const Repository = require('./repository')
+const CategoryRepository = require('./repository')
+const Repository = new CategoryRepository()
 
 class UseCase {
   constructor (update) {
@@ -7,7 +8,7 @@ class UseCase {
     this.text = update.message.text
   }
 
-  create () {
+  async create () {
     const values = this.text.split('-')
 
     const model = new Category({
@@ -16,13 +17,12 @@ class UseCase {
       userId: this.userId
     })
 
-    return Repository.create(model)
-      .then(res => {
-        return `Category ${model.name} created with max value of ${model.spendingLimit}`
-      })
-      .catch(res => {
-        return res.message
-      })
+    try {
+      await Repository.create(model)
+      return `Category ${model.name} created with max value of ${model.spendingLimit}`
+    } catch (err) {
+      return err.message
+    }
   }
 }
 
