@@ -7,11 +7,11 @@ const Repository = new CategoryRepository()
 
 /* eslint-disable no-undef */
 
-beforeAll(() => {
+beforeEach(() => {
   return setupTables()
 })
 
-afterAll(() => {
+afterEach(() => {
   return tearDown()
 })
 

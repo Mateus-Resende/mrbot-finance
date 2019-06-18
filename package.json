@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --inspect=0.0.0.0:9229 app/index.js",
     "start": "node app/index.js",
-    "test": "npm run lint && node_modules/jest/bin/jest.js -u --coverage",
+    "test": "npm run lint && node_modules/jest/bin/jest.js -u --coverage --detectOpenHandles",
     "lint": "node_modules/standard/bin/cmd.js \"app/**/*.js\" --fix"
   },
   "keywords": [

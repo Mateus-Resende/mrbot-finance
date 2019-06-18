@@ -5,14 +5,12 @@ const UseCase = require(path.resolve(process.cwd(), './app/category/index'))
 
 /* eslint-disable no-undef */
 
-beforeEach((done) => {
-  setupTables()
-    .then(() => done())
+beforeEach(() => {
+  return setupTables()
 })
 
-afterEach((done) => {
-  tearDown()
-    .then(() => done())
+afterEach(() => {
+  return tearDown()
 })
 
 describe('when sending the create message', () => {
