@@ -130,7 +130,7 @@ describe('#find', () => {
     test('it returns the correct result', async () => {
       try {
         await Repository.create(model)
-        const res = await Repository.find(params.userId, params.name)
+        const res = await Repository.find({ userId: params.userId, name: params.name })
 
         expect(res.id).toEqual(model.id)
         expect(res.userId).toEqual(model.userId)

@@ -2,6 +2,8 @@ const Category = require('./model')
 const CategoryRepository = require('./repository')
 const Repository = new CategoryRepository()
 
+const debug = require('debug')()
+
 class UseCase {
   constructor (update) {
     this.userId = update.from.id
@@ -18,10 +20,23 @@ class UseCase {
     })
 
     try {
-      await Repository.create(model)
+      const res = await Repository.create(model)
+      debug(res)
       return `Category ${model.name} created with max value of ${model.spendingLimit}`
     } catch (err) {
       return err.message
+    }
+  }
+
+  async find () {
+    const values = this.text.split(' ')
+    values.shift()
+    const name = values.join(' ')
+    try {
+      const model = await Repository.find({ userId: this.userId, name })
+      return `Category ${model.name} currently sum a total of $${model.current} and the maximum is $${model.spendingLimit}`
+    } catch (err) {
+      return `Could not find any category with name ${name}`
     }
   }
 }

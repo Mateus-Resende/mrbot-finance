@@ -18,7 +18,7 @@ class CategoryRepository {
     return this.run(queryStr, values)
   }
 
-  async find (userId, name) {
+  async find (params) {
     const queryStr = `
       SELECT *
         FROM categories
@@ -28,7 +28,7 @@ class CategoryRepository {
         LIMIT 1
     `
 
-    return this.run(queryStr, [userId, name])
+    return this.run(queryStr, [params.userId, params.name])
   }
 
   async run (queryStr, params) {
