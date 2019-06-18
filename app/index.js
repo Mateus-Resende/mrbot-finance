@@ -28,6 +28,11 @@ const start = function (bot, opts) {
     ctx.reply(replyMessage)
   })
 
+  bot.command('getcategory', async (ctx) => {
+    const replyMessage = await new Category(ctx).find()
+    ctx.reply(replyMessage)
+  })
+
   bot.on('text', (ctx) => {
     ctx.reply('I didn\'t learn that command')
   })

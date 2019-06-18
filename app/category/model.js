@@ -6,7 +6,7 @@ class Category {
     this.userId = obj.userId
     this.name = obj.name
     this.spendingLimit = obj.spendingLimit
-    this.current = obj.current
+    this.current = obj.current || 0.0
     this.deletedAt = obj.deletedAt
     this.updatedAt = obj.updatedAt
     this.createdAt = obj.createdAt
