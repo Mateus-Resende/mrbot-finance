@@ -56,7 +56,7 @@ describe('when sending the create message', () => {
       try {
         await new UseCase(message).create()
         const res = await new UseCase(message).create()
-        expect(res).toMatch(/duplicate key(.+)categories_name_key(.+)/)
+        expect(res).toEqual(`A category with the name ${name} already exists, please try with another one`)
       } catch (err) {
         fail(err)
       }

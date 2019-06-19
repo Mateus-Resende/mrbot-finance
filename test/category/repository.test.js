@@ -100,6 +100,21 @@ describe('#create', () => {
       })
     })
 
+    describe('when the spendingLimit is not a number', () => {
+      let model = new Category(params)
+      model.spendingLimit = 'asbsc'
+
+      test('raises an error', async () => {
+        try {
+          await Repository.create(model)
+          fail()
+        } catch (err) {
+          expect(err.code).toMatch(/22P02/)
+          expect(err.message).toMatch(/invalid input syntax(.+)/)
+        }
+      })
+    })
+
     describe('when the spending_limit is missing', () => {
       let model = new Category(params)
       model.spendingLimit = undefined
