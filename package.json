@@ -7,7 +7,8 @@
     "build": "tsc",
     "start": "ts-node app/index.ts",
     "start:dev": "nodemon --inspect=0.0.0.0:9229",
-    "test": "jest -u --coverage --testPathPattern=.test.ts"
+    "test": "jest -u --coverage --testPathPattern=.test.ts",
+    "typeorm": "typeorm-ts-node-commonjs"
   },
   "keywords": [
     "node",
@@ -23,17 +24,19 @@
   "dependencies": {
     "dotenv": "^8.6.0",
     "nodemon": "^2.0.20",
-    "pg": "^8.8.0",
+    "pg": "^8.4.0",
+    "reflect-metadata": "^0.1.13",
     "rollbar": "^2.25.2",
     "telegraf": "^3.40.0",
-    "typeorm": "^0.3.10",
+    "typeorm": "0.3.10",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@types/jest": "^29.1.2",
     "jest": "^29.1.2",
     "ts-jest": "^29.0.3",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.8.4"
+    "ts-node": "10.7.0",
+    "typescript": "4.5.2",
+    "@types/node": "^16.11.10"
   }
 }

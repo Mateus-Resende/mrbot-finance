@@ -1,10 +1,14 @@
+import { config as dotEnvConfig } from 'dotenv';
+dotEnvConfig();
+
 import { Context } from 'telegraf';
-import dotenv from 'dotenv';
 import Telegraf, { Extra, session } from 'telegraf';
 import { TelegrafContext } from 'telegraf/typings/context';
-import Help from './help/index';
 
-dotenv.config()
+import Help from './help/index';
+import { AppDataSource } from "./data-source"
+import { User } from "./entity/User"
+import { exit } from 'process';
 
 const token: string = process.env.TELEGRAM_BOT_TOKEN || '';
 const env = process.env.ENVIRONMENT;
@@ -16,7 +20,13 @@ type BotOpts = {
   port?: number;
 }
 
-const start = function (bot: Telegraf<TelegrafContext>, opts: BotOpts) {
+const start = async function (bot: Telegraf<TelegrafContext>, opts: BotOpts) {
+  try {
+    await AppDataSource.initialize();
+  } catch (err) {
+    console.error('Could not connect to the database', err);
+    exit(1)
+  }
   bot.use(session());
 
   bot.command('help', (ctx: Context) => {
@@ -37,6 +47,7 @@ const start = function (bot: Telegraf<TelegrafContext>, opts: BotOpts) {
   } else {
     bot.launch();
   }
+  console.log('Bot listening...');
 }
 
 if (env === 'production' || env === 'staging') {
