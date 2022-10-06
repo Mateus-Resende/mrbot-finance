@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-const help = require('../../app/help/index.js')
+import Help from '../../app/help';
 
 test('sends returns the HTML with the commands', () => {
   const commands = [
@@ -8,7 +7,5 @@ test('sends returns the HTML with the commands', () => {
     '    <b>/addcategory</b> - <i>Create a new category</i>',
     '    <b>/getcategory</b> - <i>Find category</i>'
   ].join('\n')
-  expect(help.getCommands()).toEqual(commands)
+  expect(Help.getCommands()).toEqual(commands)
 })
-
-/* eslint-enable no-undef */
