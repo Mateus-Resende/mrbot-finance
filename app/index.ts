@@ -7,7 +7,6 @@ import { TelegrafContext } from 'telegraf/typings/context';
 
 import Help from './help/index';
 import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
 import { exit } from 'process';
 
 const token: string = process.env.TELEGRAM_BOT_TOKEN || '';
