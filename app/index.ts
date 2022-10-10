@@ -1,13 +1,14 @@
 import { config as dotEnvConfig } from 'dotenv';
 dotEnvConfig();
 
-import { Context } from 'telegraf';
-import Telegraf, { Extra, session } from 'telegraf';
+import Telegraf, { Extra, session, Context } from 'telegraf';
 import { TelegrafContext } from 'telegraf/typings/context';
 
-import Help from './help/index';
-import { AppDataSource } from "./data-source"
+import Help from './use-cases/help/index';
 import { exit } from 'process';
+import { AppDataSource } from './data-source';
+import { Start } from './use-cases/start';
+import UserRepository from './repositories/user';
 
 const token: string = process.env.TELEGRAM_BOT_TOKEN || '';
 const env = process.env.ENVIRONMENT;
@@ -21,7 +22,9 @@ type BotOpts = {
 
 const start = async function (bot: Telegraf<TelegrafContext>, opts: BotOpts) {
   try {
-    await AppDataSource.initialize();
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
   } catch (err) {
     console.error('Could not connect to the database', err);
     exit(1)
@@ -29,7 +32,14 @@ const start = async function (bot: Telegraf<TelegrafContext>, opts: BotOpts) {
   bot.use(session());
 
   bot.command('help', (ctx: Context) => {
-    ctx.reply(Help.getCommands(), Extra.HTML())
+    ctx.reply(Help.getCommands(), Extra.HTML());
+  });
+
+  bot.command('start', async (ctx: Context) => {
+    const userRepository = new UserRepository();
+    const useCase = new Start(userRepository);
+
+    ctx.reply(await useCase.run(ctx.from), Extra.HTML());
   });
 
   bot.on('text', (ctx: Context) => {

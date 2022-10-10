@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Generated } from "typeorm"
-import { Account } from "./account"
-import { Category } from "./category"
+import { Account } from "./account.entity"
+import { Category } from "./category.entity"
 
 @Entity({ name: 'users' })
 export class User {
@@ -8,9 +8,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
-  @Generated('uuid')
-  uuid: string
+  @Column({ name: 'messenger_id' })
+  messengerId: number
 
   @Column({ name: 'first_name' })
   firstName: string
@@ -26,13 +25,4 @@ export class User {
 
   @OneToMany(() => Account, (account) => account.user)
   accounts: Account[]
-
-  @Column({ name: 'created_at' })
-  createdAt: Date
-
-  @Column({ name: 'updated_at' })
-  updatedAt: Date
-
-  @Column({ name: 'deleted_at' })
-  deletedAt: Date
 }

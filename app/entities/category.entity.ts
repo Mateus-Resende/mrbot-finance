@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, Generated } from "typeorm"
-import { Transaction } from "./transaction"
-import { User } from "./user"
+import { Transaction } from "./transaction.entity"
+import { User } from "./user.entity"
 
 @Entity({ name: 'categories' })
 export class Category {

@@ -1,4 +1,4 @@
-import Help from '../../app/help';
+import Help from '../../../app/use-cases/help';
 
 test('sends returns the HTML with the commands', () => {
   const commands = [

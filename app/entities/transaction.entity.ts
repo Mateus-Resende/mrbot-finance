@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, Generated } from "typeorm"
-import { Category } from "./category"
+import { Category } from "./category.entity"
 
 enum TransactionType {
   EXPENSE = 'expense',
