@@ -31,11 +31,11 @@ const start = async function (bot: Telegraf<TelegrafContext>, opts: BotOpts) {
   }
   bot.use(session());
 
-  bot.command('help', (ctx: Context) => {
+  bot.help((ctx: Context) => {
     ctx.reply(Help.getCommands(), Extra.HTML());
   });
 
-  bot.command('start', async (ctx: Context) => {
+  bot.start(async (ctx: Context) => {
     const userRepository = new UserRepository();
     const useCase = new Start(userRepository);
 
