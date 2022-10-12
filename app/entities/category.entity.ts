@@ -1,47 +1,48 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, Generated } from "typeorm"
-import { Transaction } from "./transaction.entity"
-import { User } from "./user.entity"
+import {
+  Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, Generated,
+} from 'typeorm';
+import type Transaction from './transaction.entity';
+import type User from './user.entity';
 
 @Entity({ name: 'categories' })
-export class Category {
-
+export default class Category {
   @PrimaryGeneratedColumn()
-  id: number
+    id: number;
 
   @Column()
   @Generated('uuid')
-  uuid: string
+    uuid: string;
 
   @Column()
-  name: string
+    name: string;
 
   @Column()
-  code: string
+    code: string;
 
   @Column({ name: 'spending_limit' })
-  spendingLimit: Number
+    spendingLimit: Number;
 
   @Column({ name: 'current_spent' })
-  current_spent: Number
+    current_spent: Number;
 
-  @ManyToOne(() => User, (user) => user.categories)
-  user: User
+  @ManyToOne('User', 'categories')
+    user: User;
 
-  @OneToMany(() => Category, (category) => category.parent)
-  children: Category[]
+  @OneToMany('Category', 'parent')
+    children: Category[];
 
-  @ManyToOne(() => Category, (category) => category.children)
-  parent: Category
+  @ManyToOne('Category', 'children')
+    parent: Category;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.category)
-  transactions: Transaction[]
+  @OneToMany('Transaction', 'category')
+    transactions: Transaction[];
 
   @Column({ name: 'created_at' })
-  createdAt: Date
+    createdAt: Date;
 
   @Column({ name: 'updated_at' })
-  updatedAt: Date
+    updatedAt: Date;
 
   @Column({ name: 'deleted_at' })
-  deletedAt: Date
+    deletedAt: Date;
 }

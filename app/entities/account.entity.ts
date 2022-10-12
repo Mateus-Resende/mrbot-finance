@@ -1,28 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column, Generated, ManyToOne } from "typeorm"
-import { User } from "./user.entity"
+import {
+  Entity, PrimaryGeneratedColumn, Column, Generated, ManyToOne,
+} from 'typeorm';
+import type User from './user.entity';
 
 @Entity({ name: 'accounts' })
-export class Account {
-
+export default class Account {
   @PrimaryGeneratedColumn()
-  id: number
+    id: number;
 
   @Column()
   @Generated('uuid')
-  uuid: string
+    uuid: string;
 
   @Column()
-  name: string
+    name: string;
 
-  @ManyToOne(() => User, (user) => user.accounts)
-  user: User
+  @ManyToOne('User', 'accounts')
+    user: User;
 
   @Column({ name: 'created_at' })
-  createdAt: Date
+    createdAt: Date;
 
   @Column({ name: 'updated_at' })
-  updatedAt: Date
+    updatedAt: Date;
 
   @Column({ name: 'deleted_at' })
-  deletedAt: Date
+    deletedAt: Date;
 }

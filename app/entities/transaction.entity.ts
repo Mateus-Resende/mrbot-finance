@@ -1,63 +1,64 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, Generated } from "typeorm"
-import { Category } from "./category.entity"
+import {
+  Entity, PrimaryGeneratedColumn, Column, ManyToOne, Generated,
+} from 'typeorm';
+import type Category from './category.entity';
 
 enum TransactionType {
   EXPENSE = 'expense',
   REVENUE = 'revenue',
-  TRANSFER = 'transfer'
+  TRANSFER = 'transfer',
 }
 
 enum Currency {
   BRL = 'BRL',
   USD = 'USD',
-  EUR = 'EUR'
+  EUR = 'EUR',
 }
 
 @Entity({ name: 'transactions' })
-export class Transaction {
-
+export default class Transaction {
   @PrimaryGeneratedColumn()
-  id: number
+    id: number;
 
   @Column()
   @Generated('uuid')
-  uuid: string
+    uuid: string;
 
   @Column()
-  name: string
+    name: string;
 
   @Column()
-  value: Number
+    value: Number;
 
   @Column()
-  date: Date
+    date: Date;
 
   @Column({
     type: 'enum',
     enum: Currency,
-    default: Currency.BRL
+    default: Currency.BRL,
   })
-  currency: string
+    currency: string;
 
   @Column()
-  description: string
+    description: string;
 
   @Column({
     type: 'enum',
     enum: TransactionType,
-    default: TransactionType.EXPENSE
+    default: TransactionType.EXPENSE,
   })
-  type: string
+    type: string;
 
-  @ManyToOne(() => Category, (category) => category.transactions)
-  category: Category
+  @ManyToOne('Category', 'transactions')
+    category: Category;
 
   @Column({ name: 'created_at' })
-  createdAt: Date
+    createdAt: Date;
 
   @Column({ name: 'updated_at' })
-  updatedAt: Date
+    updatedAt: Date;
 
   @Column({ name: 'deleted_at' })
-  deletedAt: Date
+    deletedAt: Date;
 }

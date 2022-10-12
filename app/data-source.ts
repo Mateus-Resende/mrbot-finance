@@ -1,7 +1,7 @@
-import { DataSource } from "typeorm";
+import { DataSource } from 'typeorm';
 
 const AppDataSource = new DataSource({
-  type: "postgres",
+  type: 'postgres',
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USERNAME,
@@ -9,13 +9,13 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: true,
-  entities: [__dirname + '/entities/*.entity.{js,ts}'],
+  entities: [`${__dirname}/entities/*.entity.{js,ts}`],
   migrations: [],
   subscribers: [],
 });
 
 const TestDataSource = new DataSource({
-  type: "postgres",
+  type: 'postgres',
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USERNAME,
@@ -24,7 +24,7 @@ const TestDataSource = new DataSource({
   dropSchema: true,
   synchronize: true,
   logging: false,
-  entities: [__dirname + '/entities/*.entity.{js,ts}'],
+  entities: [`${__dirname}/entities/*.entity.{js,ts}`],
   migrations: [],
   subscribers: [],
 });

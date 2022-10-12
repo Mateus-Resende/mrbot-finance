@@ -20,7 +20,7 @@ describe('UserRepository', () => {
       messengerId: 123,
       firstName: 'Test',
       lastName: 'Jest',
-      username: 'test-jest'
+      username: 'test-jest',
     });
   });
 

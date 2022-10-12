@@ -1,12 +1,12 @@
-import { User } from '../../../app/entities';
+import User from '../../../app/entities/user.entity';
 import UserRepository from '../../../app/repositories/user';
-import { Start } from '../../../app/use-cases/start';
+import Start from '../../../app/use-cases/start';
 
 jest.mock('../../../app/repositories/user.ts');
 
 describe('/Start', () => {
   const userRepository = new UserRepository();
-  let sut = new Start(userRepository);
+  const sut = new Start(userRepository);
 
   const messengerUser = {
     id: 123,
@@ -21,9 +21,7 @@ describe('/Start', () => {
     beforeEach(() => {
       repositoryMock = jest
         .spyOn(UserRepository.prototype, 'findByUsername')
-        .mockImplementationOnce(() => {
-          return null;
-        });
+        .mockImplementationOnce(() => null);
     });
 
     afterEach(() => {
